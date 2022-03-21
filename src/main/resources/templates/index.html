@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Employee Attendance</title>
+		 
+		
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}"/>
+		<script th:src="@{/assets/js/jquery-3.5.1.js}"></script>
+	     <script th:src="@{/assets/js/bootstrap-3.3.7.js}"></script>
+	    <style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+				<div class="col-md-12" style="margin-top: 20px">
+				<a th:href="@{/empAttendsnce/saveData}" class="btn btn-success">Save Data From XL</a>
+				<a th:href="@{/empAttendsnce/showReport}" class="btn btn-warning">Show Report</a>
+				
+				<input type="text" id="empid" name="id" style="width:300px; float: right" placeholder="Search by Id"/>
+				</div>	
+				<div class="col-md-12" id="empAttendance" th:fragment="empAttendance" style="margin: 0px 0px">
+									  <section   id="data-maintenance" style="margin-top: 30px;">
+											 <div class="section-header sectionbartoggle">
+												<h1 style="text-align: center;" >Employee Attendance List</h1>
+											 </div>
+											<div class="section-body">
+												<div class="porow" id="productionOrderdetailtable" th:fragment="productionOrderdetailtable">
+													 <table class="table table-striped table-bordered normal-table " th:with="df=${'E, dd-MMM-yyyy'}">
+														<thead>
+															<tr>
+																<th >SL.</th>
+																<th >Month</th>
+																<th  >Date</th>
+																<th  >Day</th>
+																<th  >ID</th>
+																<th  >Employee Name</th>
+																<th  >Department</th>
+																<th  >First-In Time</th>
+																<th  >Last-Out Time</th>
+																<th  >Hours of Work</th>
+																 
+																 
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="d, n : ${empAttendanceList}" class="porow"    >
+															    <td th:text="${n.index + 1}"   ></td>
+																<td th:text="${d.month}"></td>
+																<td th:text="${#dates.format(d.date, df)}"></td>
+																<td th:text="${d.day}"></td>
+																<td th:text="${d.id}"></td>
+																<td th:text="${d.employeeName}"></td>
+																<td th:text="${d.department}"></td>
+																<td>
+																	<span th:if="${d.lateIn} =='Late'" th:text="${d.firstInTime}" style="background: red; width: 100%; height: 100%;"></span>
+																	<span th:if="${d.lateIn} !='Late'" th:text="${d.firstInTime}" style=" width: 100%; height: 100%;"></span>
+																</td>
+																<td>
+																	<span th:if="${d.fastOut} == 'Fast'" th:text="${d.lastOutTime}" style="background: Yellow; width: 100%; height: 100%;"></span>
+																	<span th:if="${d.fastOut} != 'Fast'" th:text="${d.lastOutTime}" style=" width: 100%; height: 100%;"></span>
+																</td>
+																<td th:text="${d.hoursOfWork}"></td>
+																
+																 
+															 </tr>
+														</tbody>
+														 
+													</table>
+													
+													 
+												</div>
+											</div>
+										</section>
+										<script type="text/javascript" th:src="@{/assets/js/index.js}"></script>
+									</div>
+									
+</body>
+</html>
